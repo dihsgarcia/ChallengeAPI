@@ -1,5 +1,6 @@
 from sqlalchemy.orm import Session
-from src.models.UsuarioModel import UsuarioModel
+from src.models.usuarioModel import UsuarioModel
+from sqlalchemy.orm import joinedload
 
 
 class UsuarioRepository:
