@@ -1,6 +1,6 @@
 from fastapi import FastAPI, HTTPException
 from fastapi.responses import JSONResponse
-from src.routers import authRoute, usuarioRoute
+from src.routers import authRoute, usuarioRoute, estoqueRoute
 from src.config.dbContext import Base, engine
 from src.models.usuarioModel import UsuarioModel
 from src.models.tipoUsuarioModel import TipoUsuarioModel
@@ -14,6 +14,7 @@ app = FastAPI(
 
 app.include_router(authRoute.router, prefix="/auth", tags=["Auth"])
 app.include_router(usuarioRoute.router, prefix="/usuarios", tags=["User"])
+app.include_router(estoqueRoute.router, prefix="/estoques", tags=["Estoque"])
 
 
 @app.exception_handler(HTTPException)
