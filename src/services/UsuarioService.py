@@ -21,7 +21,7 @@ class UsuarioService:
     def register_usuario(self, usuario_data: UsuarioCreate):
         try:
             if usuario_data.tipoUsuario not in [tipo.value for tipo in TipoUsuarioEnum]:
-                raise ValueError("O tipoUsuarioId fornecido é inválido")
+                raise ValueError("O tipoUsuarioId fornecido é inválido, enviar 1 para ADMIN ou 2 para OPERADOR")
 
             if self.repository.get_by_email(usuario_data.email):
                 raise ValueError("E-mail já está em uso")
@@ -53,7 +53,10 @@ class UsuarioService:
                 raise ValueError("E-mail ou senha inválidos")
 
             # Gerar token JWT
-            token = create_access_token({"sub": usuario.email})
+            token = create_access_token({
+                "sub": usuario.email,
+                "tipoUsuario": usuario.tipo_usuario
+            })
             return {"tokenType": "bearer", "accessToken": token}
 
         except SQLAlchemyError as e:
