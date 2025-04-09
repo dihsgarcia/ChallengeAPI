@@ -53,7 +53,10 @@ class UsuarioService:
                 raise ValueError("E-mail ou senha inválidos")
 
             # Gerar token JWT
-            token = create_access_token({"sub": usuario.email})
+            token = create_access_token({
+                "sub": usuario.email,
+                "tipoUsuario": usuario.tipo_usuario
+            })
             return {"tokenType": "bearer", "accessToken": token}
 
         except SQLAlchemyError as e:

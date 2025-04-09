@@ -5,6 +5,7 @@ from src.repositories.estoqueRepository import EstoqueRepository
 from src.services.estoqueService import EstoqueService
 from src.schemas.estoqueSchema import EstoqueCreate, EstoqueResponse
 from src.enums.statusEnum import StatusEnum
+from src.utils.auth import admin_role, general_role
 
 router = APIRouter()
 
@@ -15,12 +16,14 @@ def get_estoque_service(db: Session = Depends(get_dbContext)):
 
 
 @router.get("/", response_model=list[EstoqueResponse])
-def get_estoques(service: EstoqueService = Depends(get_estoque_service)):
+def get_estoques(service: EstoqueService = Depends(get_estoque_service),
+                 user: dict = Depends(general_role)):
     return service.get_all_estoques()
 
 
 @router.get("/{estoque_id}", response_model=EstoqueResponse)
-def get_estoque(estoque_id: int, service: EstoqueService = Depends(get_estoque_service)):
+def get_estoque(estoque_id: int, service: EstoqueService = Depends(get_estoque_service),
+                user: dict = Depends(general_role)):
     estoque = service.get_estoque_by_id(estoque_id)
     if not estoque:
         raise HTTPException(status_code=404, detail="Estoque não encontrado")
@@ -28,12 +31,14 @@ def get_estoque(estoque_id: int, service: EstoqueService = Depends(get_estoque_s
 
 
 @router.post("/", response_model=EstoqueResponse)
-def create_estoque(estoque: EstoqueCreate, service: EstoqueService = Depends(get_estoque_service)):
+def create_estoque(estoque: EstoqueCreate, service: EstoqueService = Depends(get_estoque_service),
+                   user: dict = Depends(admin_role)):
     return service.create_estoque(estoque)
 
 
-@router.patch("/{estoque_id}/status", response_model=EstoqueResponse)
-def alterar_status(estoque_id: int, status: StatusEnum, service: EstoqueService = Depends(get_estoque_service)):
+@router.patch("/", response_model=EstoqueResponse)
+def alterar_status(estoque_id: int, status: StatusEnum, service: EstoqueService = Depends(get_estoque_service),
+                   user: dict = Depends(admin_role)):
     try:
         return service.alterar_status(estoque_id, status)
     except Exception as e:
