@@ -1,6 +1,9 @@
 from pydantic import BaseModel, field_validator
 from datetime import datetime
+from typing import List, Optional
 from src.enums.statusEnum import StatusEnum
+from src.schemas.localizacaoSchema import LocalizacaoCreate
+from src.schemas.localizacaoSchema import LocalizacaoResponse
 
 
 class EstoqueBase(BaseModel):
@@ -16,13 +19,14 @@ class EstoqueBase(BaseModel):
 
 
 class EstoqueCreate(EstoqueBase):
-    pass
+    localizacoes: Optional[List[LocalizacaoCreate]] = []
 
 
 class EstoqueResponse(EstoqueBase):
     id: int
     criado_em: datetime
     atualizado_em: datetime
+    localizacoes: List[LocalizacaoResponse]
 
     class Config:
         orm_mode = True
