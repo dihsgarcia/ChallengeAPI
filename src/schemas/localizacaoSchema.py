@@ -4,7 +4,6 @@ from typing import Optional
 
 class LocalizacaoBase(BaseModel):
     nome: str
-    estoque_id: int
 
 
 class LocalizacaoCreate(LocalizacaoBase):
@@ -13,6 +12,7 @@ class LocalizacaoCreate(LocalizacaoBase):
 
 class LocalizacaoResponse(LocalizacaoBase):
     id: int
-
+    estoque_id: int
+    
     class Config:
         orm_mode = True
