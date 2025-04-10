@@ -16,4 +16,4 @@ class EstoqueModel(Base):
 
     localizacoes = relationship("LocalizacaoModel", back_populates="estoque_rel", lazy="joined")
 
-    equipamentos = relationship("EquipamentoModel", back_populates="estoque_rel")
+    equipamentos = relationship("EquipamentoModel", back_populates="estoque_rel", lazy="joined")

@@ -17,7 +17,7 @@ class EquipamentoModel(Base):
     tipo_id = Column(Integer, ForeignKey("tiposequipamento.id", name="fk_equipamento_tipo"), nullable=False)
     categoria_id = Column(Integer, ForeignKey("categorias.id", name="fk_equipamento_categoria"), nullable=False)
 
-    estoque_rel = relationship("EstoqueModel", back_populates="equipamentos")
-    tipo_rel = relationship("TipoEquipamentoModel", back_populates="equipamentos")
-    categoria_rel = relationship("CategoriaModel", back_populates="equipamentos")
+    estoque_rel = relationship("EstoqueModel", lazy="joined")
+    tipo_rel = relationship("TipoEquipamentoModel", lazy="joined")
+    categoria_rel = relationship("CategoriaModel", lazy="joined")
     historico_movimentacoes = relationship("HistoricoMovimentacaoModel", back_populates="equipamento_rel")

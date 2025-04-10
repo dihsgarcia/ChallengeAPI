@@ -12,12 +12,6 @@ class UsuarioService:
     def __init__(self, repository: UsuarioRepository):
         self.repository = repository
 
-    def get_all_usuarios(self):
-        try:
-            return self.repository.get_all()
-        except SQLAlchemyError as e:
-            raise Exception(f"Erro ao buscar usuários: {str(e)}")
-
     def register_usuario(self, usuario_data: UsuarioCreate):
         try:
             if usuario_data.tipoUsuario not in [tipo.value for tipo in TipoUsuarioEnum]:
