@@ -1,6 +1,6 @@
 from sqlalchemy import Column, ForeignKey, Integer, String
 from sqlalchemy.orm import relationship
-from src.config.dbContext import Base
+from src.config.base import Base
 
 
 class UsuarioModel(Base):
