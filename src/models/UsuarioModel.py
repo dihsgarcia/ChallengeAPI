@@ -10,8 +10,7 @@ class UsuarioModel(Base):
     nome = Column(String(100), nullable=False)
     email = Column(String(100), unique=True, nullable=False)
     senha_hash = Column(String(255), nullable=False)
-    tipo_usuario = Column(Integer, ForeignKey(
-        "tiposusuario.id", name="fk_tipo_usuario"), nullable=False)
+    tipo_usuario = Column(Integer, ForeignKey("tiposusuario.id", name="fk_tipo_usuario"), nullable=False)
 
     tipo_usuario_rel = relationship(
         "TipoUsuarioModel",

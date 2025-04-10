@@ -4,6 +4,9 @@ from src.config.base import Base
 
 from src.models.estoqueModel import EstoqueModel
 from src.models.localizacaoModel import LocalizacaoModel
+from src.models.tipoEquipamentoModel import TipoEquipamentoModel
+from src.models.categoriaModel import CategoriaModel
+from src.models.equipamentoModel import EquipamentoModel
 
 
 DATABASE_URL = "postgresql://postgres:admin@localhost:5432/postgres"

@@ -10,11 +10,10 @@ class EstoqueModel(Base):
 
     id = Column(Integer, primary_key=True, index=True)
     nome = Column(String(100), nullable=False)
-    status = Column(String(50), nullable=False,
-                    default=StatusEnum.ATIVADO.value)
+    status = Column(String(50), nullable=False,default=StatusEnum.ATIVADO.value)
     criado_em = Column(TIMESTAMP, server_default=func.now(), nullable=False)
-    atualizado_em = Column(TIMESTAMP, server_default=func.now(),
-                           onupdate=func.now(), nullable=False)
+    atualizado_em = Column(TIMESTAMP, server_default=func.now(), onupdate=func.now(), nullable=False)
 
-    localizacoes = relationship(
-        "LocalizacaoModel", back_populates="estoque_rel", lazy="joined")
+    localizacoes = relationship("LocalizacaoModel", back_populates="estoque_rel", lazy="joined")
+
+    equipamentos = relationship("EquipamentoModel", back_populates="estoque_rel")
