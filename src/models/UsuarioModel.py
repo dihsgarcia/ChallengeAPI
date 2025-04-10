@@ -18,3 +18,5 @@ class UsuarioModel(Base):
         primaryjoin="UsuarioModel.tipo_usuario == TipoUsuarioModel.id",
         lazy="joined"
     )
+
+    historico_movimentacoes = relationship("HistoricoMovimentacaoModel", back_populates="usuario_rel")

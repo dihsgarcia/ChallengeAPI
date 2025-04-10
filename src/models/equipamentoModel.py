@@ -20,3 +20,4 @@ class EquipamentoModel(Base):
     estoque_rel = relationship("EstoqueModel", back_populates="equipamentos")
     tipo_rel = relationship("TipoEquipamentoModel", back_populates="equipamentos")
     categoria_rel = relationship("CategoriaModel", back_populates="equipamentos")
+    historico_movimentacoes = relationship("HistoricoMovimentacaoModel", back_populates="equipamento_rel")

@@ -11,3 +11,5 @@ class LocalizacaoModel(Base):
     estoque_id = Column(Integer, ForeignKey("estoques.id", name="fk_estoque"), nullable=False)
 
     estoque_rel = relationship("EstoqueModel", back_populates="localizacoes")
+
+    historico_movimentacoes = relationship("HistoricoMovimentacaoModel", back_populates="localizacao_rel")
