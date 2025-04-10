@@ -1,5 +1,4 @@
 from sqlalchemy.exc import SQLAlchemyError
-from sqlalchemy.orm import joinedload
 from src.repositories.equipamentoRepository import EquipamentoRepository
 from src.models.equipamentoModel import EquipamentoModel
 from src.schemas.equipamentoSchema import EquipamentoCreate, EquipamentoUpdate
@@ -47,20 +46,10 @@ class EquipamentoService:
         self.repository.update(estoque)
         return estoque
     
-    def get_by_filter(self, estoque_id=None, localizacao_id=None, tipo_id=None, categoria_id=None):
-        query = self.db.query(EquipamentoModel).options(
-            joinedload(EquipamentoModel.estoque_rel),
-            joinedload(EquipamentoModel.tipo_rel),
-            joinedload(EquipamentoModel.categoria_rel)
+    def get_equipamentos_by_filter(self, estoque_id=None, localizacao_id=None, tipo_id=None, categoria_id=None):
+        return self.repository.get_by_filter(
+            estoque_id=estoque_id,
+            localizacao_id=localizacao_id,
+            tipo_id=tipo_id,
+            categoria_id=categoria_id
         )
-
-        if estoque_id:
-            query = query.filter(EquipamentoModel.estoque_id == estoque_id)
-        if localizacao_id:
-            query = query.filter(EquipamentoModel.historico_movimentacoes.any(localizacao_id=localizacao_id))
-        if tipo_id:
-            query = query.filter(EquipamentoModel.tipo_id == tipo_id)
-        if categoria_id:
-            query = query.filter(EquipamentoModel.categoria_id == categoria_id)
-
-        return query.all()
