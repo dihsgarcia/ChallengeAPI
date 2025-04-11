@@ -1,5 +1,6 @@
-from sqlalchemy import Column, Integer, String
-from src.config.DbContext import Base
+from sqlalchemy import Column, ForeignKey, Integer, String
+from sqlalchemy.orm import relationship
+from src.config.base import Base
 
 
 class UsuarioModel(Base):
@@ -9,3 +10,13 @@ class UsuarioModel(Base):
     nome = Column(String(100), nullable=False)
     email = Column(String(100), unique=True, nullable=False)
     senha_hash = Column(String(255), nullable=False)
+    tipo_usuario = Column(Integer, ForeignKey("tiposusuario.id", name="fk_tipo_usuario"), nullable=False)
+
+    tipo_usuario_rel = relationship(
+        "TipoUsuarioModel",
+        back_populates="usuarios",
+        primaryjoin="UsuarioModel.tipo_usuario == TipoUsuarioModel.id",
+        lazy="joined"
+    )
+
+    historico_movimentacoes = relationship("HistoricoMovimentacaoModel", back_populates="usuario_rel")
